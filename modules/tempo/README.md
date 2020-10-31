@@ -18,7 +18,7 @@ These types of resources are supported:
 
 ```hcl
 module "tempo" {
-  source  = "nlamirault/observability/google/tempo"
+  source  = "nlamirault/observability/google//modules/tempo"
   version = "0.0.0"
 
   project = var.project

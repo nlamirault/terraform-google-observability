@@ -16,7 +16,7 @@ These types of resources are supported:
 
 ```hcl
 module "thanos" {
-  source  = "nlamirault/observability/google/thanos"
+  source  = "nlamirault/observability/google//modules/thanos"
   version = "0.0.0"
 
   project    = var.project

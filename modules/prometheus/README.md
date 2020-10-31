@@ -15,7 +15,7 @@ These types of resources are supported:
 
 ```hcl
 module "prometheus" {
-  source  = "nlamirault/observability/google/prometheus"
+  source  = "nlamirault/observability/google//modules/prometheus"
   version = "0.0.0"
 
   project = var.project
