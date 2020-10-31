@@ -18,6 +18,9 @@ These types of resources are supported:
 
 ```hcl
 module "loki" {
+  source  = "nlamirault/observability/google/loki"
+  version = "0.0.0"
+
   project = var.project
   region  = var.region
 

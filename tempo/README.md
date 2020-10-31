@@ -17,12 +17,15 @@ These types of resources are supported:
 ## Usage
 
 ```hcl
-module "loki" {
+module "tempo" {
+  source  = "nlamirault/observability/google/tempo"
+  version = "0.0.0"
+
   project = var.project
   region  = var.region
 
-  account_id_loki   = var.account_id_loki
-  display_name_loki = var.display_name_loki
+  account_id_tempo   = var.account_id_tempo
+  display_name_tempo = var.display_name_tempo
 
   bucket_location      = var.bucket_location
   bucket_storage_class = var.bucket_storage_class
@@ -36,8 +39,8 @@ and variables :
 project  = "...."
 region = "...."
 
-account_id_loki   = "loki"
-display_name_loki = "Loki for Portefaix"
+account_id_tempo   = "tempo"
+display_name_tempo = "Loki for Portefaix"
 
 bucket_location = "europe-west1"
 
@@ -53,9 +56,9 @@ bucket_labels = {
 
 This module creates :
 
-* a ServiceAccount named *grafana-loki*
-* a GCS bucket *myproject_name_loki*
-* a Bigtable instance *grafana-loki*
+* a ServiceAccount named *grafana-tempo*
+* a GCS bucket *myproject_name_tempo*
+* a Bigtable instance *grafana-tempo*
 
 ## Documentation
 
