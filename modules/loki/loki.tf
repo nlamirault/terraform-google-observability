@@ -36,7 +36,7 @@ resource "google_storage_bucket_iam_member" "loki" {
 }
 
 resource "google_secret_manager_secret" "loki_sa_key" {
-  secret_id = "service_account_loki"
+  secret_id = "loki_service_account"
 
   labels = var.secret_labels
 

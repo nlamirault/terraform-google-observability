@@ -29,7 +29,7 @@ resource "google_project_iam_member" "prometheus" {
 }
 
 resource "google_secret_manager_secret" "prometheus_sa_key" {
-  secret_id = "loki_service_account"
+  secret_id = "prometheus_service_account"
 
   labels = var.secret_labels
 
