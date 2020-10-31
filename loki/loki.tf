@@ -34,3 +34,17 @@ resource "google_storage_bucket_iam_member" "loki" {
   role   = "roles/storage.objectAdmin"
   member = format("serviceAccount:%s", google_service_account.loki.email)
 }
+
+resource "google_secret_manager_secret" "loki_sa_key" {
+  secret_id = "loki_service_account"
+
+  labels = var.secret_labels
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.secret_location
+      }
+    }
+  }
+}

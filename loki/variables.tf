@@ -45,3 +45,16 @@ variable bucket_labels {
     "made-by"    = "terraform"
   }
 }
+
+variable secret_location {
+  type        = string
+  description = "The secret location"
+}
+
+variable secret_labels {
+  description = "Map of labels to apply to the secret"
+  type        = map(string)
+  default = {
+    "made-by"    = "terraform"
+  }
+}
