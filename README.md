@@ -1,11 +1,13 @@
 # Observability components into Google Cloud Platform
 
-Terraform modules which configure on GCP :
+This module consists of the following submodules:
 
-* Prometheus
-* Thanos
-* Loki
-* Tempo
+- [prometheus](https://github.com/nlamirault/terraform-google-observability/tree/master/modules/prometheus)
+- [thanos](https://github.com/nlamirault/terraform-google-observability/tree/master/modules/thanos)
+- [loki](https://github.com/nlamirault/terraform-google-observability/tree/master/modules/loki)
+- [tempo](https://github.com/nlamirault/terraform-google-observability/tree/master/modules/tempo)
+
+See more details in each module's README.
 
 ## Terraform versions
 
