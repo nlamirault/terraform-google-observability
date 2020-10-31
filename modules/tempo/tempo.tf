@@ -34,3 +34,17 @@ resource "google_storage_bucket_iam_member" "tempo" {
   role   = "roles/storage.objectAdmin"
   member = format("serviceAccount:%s", google_service_account.tempo.email)
 }
+
+resource "google_secret_manager_secret" "tempo_sa_key" {
+  secret_id = "tempo_service_account"
+
+  labels = var.secret_labels
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.secret_location
+      }
+    }
+  }
+}

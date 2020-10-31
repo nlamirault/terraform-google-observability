@@ -12,13 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resource "google_storage_bucket" "loki" {
-  name          = local.name
-  location      = var.bucket_location
-  storage_class = var.bucket_storage_class
-  labels        = var.bucket_labels
-}
-
 resource "google_service_account" "loki" {
   account_id   = var.account_id
   display_name = var.display_name
@@ -29,6 +22,13 @@ resource "google_service_account_key" "loki_sa_key" {
   service_account_id = google_service_account.loki.name
 }
 
+resource "google_storage_bucket" "loki" {
+  name          = local.name
+  location      = var.bucket_location
+  storage_class = var.bucket_storage_class
+  labels        = var.bucket_labels
+}
+
 resource "google_storage_bucket_iam_member" "loki" {
   bucket = google_storage_bucket.loki.name
   role   = "roles/storage.objectAdmin"
@@ -36,7 +36,7 @@ resource "google_storage_bucket_iam_member" "loki" {
 }
 
 resource "google_secret_manager_secret" "loki_sa_key" {
-  secret_id = "loki_service_account"
+  secret_id = "service_account_loki"
 
   labels = var.secret_labels
 

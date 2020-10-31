@@ -28,20 +28,33 @@ variable display_name {
   description = "The display name for the service account"
 }
 
-variable location {
+variable bucket_location {
   type        = string
   description = "The bucket location"
 }
 
-variable storage_class {
+variable bucket_storage_class {
   description = "Bucket storage class."
   default     = "MULTI_REGIONAL"
 }
 
-variable labels {
+variable bucket_labels {
   description = "Map of labels to apply to the bucket"
   type        = map(string)
   default = {
-    "made-by"    = "terraform"
+    "made-by" = "terraform"
+  }
+}
+
+variable secret_location {
+  type        = string
+  description = "The secret location"
+}
+
+variable secret_labels {
+  description = "Map of labels to apply to the secret"
+  type        = map(string)
+  default = {
+    "made-by" = "terraform"
   }
 }

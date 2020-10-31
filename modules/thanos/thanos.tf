@@ -19,18 +19,32 @@ resource "google_service_account" "thanos" {
 }
 
 resource "google_service_account_key" "thanos_sa_key" {
-  service_account_id = "${google_service_account.thanos.name}"
+  service_account_id = google_service_account.thanos.name
 }
 
 resource "google_storage_bucket" "thanos" {
   name          = format("%s_thanos", var.project)
-  location      = var.location
-  storage_class = var.storage_class
-  labels        = var.labels
+  location      = var.bucket_location
+  storage_class = var.bucket_storage_class
+  labels        = var.bucket_labels
 }
 
 resource "google_storage_bucket_iam_member" "thanos" {
   bucket = google_storage_bucket.thanos.name
   role   = "roles/storage.objectAdmin"
   member = format("serviceAccount:%s", google_service_account.thanos.email)
+}
+
+resource "google_secret_manager_secret" "thanos_sa_key" {
+  secret_id = "thanos_service_account"
+
+  labels = var.secret_labels
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.secret_location
+      }
+    }
+  }
 }

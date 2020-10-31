@@ -27,3 +27,16 @@ variable display_name {
   type        = string
   description = "The display name for the service account"
 }
+
+variable secret_location {
+  type        = string
+  description = "The secret location"
+}
+
+variable secret_labels {
+  description = "Map of labels to apply to the secret"
+  type        = map(string)
+  default = {
+    "made-by" = "terraform"
+  }
+}

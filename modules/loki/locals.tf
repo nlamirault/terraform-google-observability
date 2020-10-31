@@ -13,5 +13,5 @@
 # limitations under the License.
 
 locals {
-  loki_name = format("%s_loki", var.project)
+  name = format("%s_loki", var.project)
 }

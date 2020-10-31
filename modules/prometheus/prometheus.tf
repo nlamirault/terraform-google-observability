@@ -27,3 +27,17 @@ resource "google_project_iam_member" "prometheus" {
   role    = "roles/compute.instanceAdmin.v1"
   member  = format("serviceAccount:%s", google_service_account.prometheus.email)
 }
+
+resource "google_secret_manager_secret" "prometheus_sa_key" {
+  secret_id = "loki_service_account"
+
+  labels = var.secret_labels
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.secret_location
+      }
+    }
+  }
+}

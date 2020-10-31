@@ -14,15 +14,15 @@
 
 output "bucket" {
   description = "Bucket resource (for single use)."
-  value       = google_storage_bucket.loki
+  value       = google_storage_bucket.tempo
 }
 
 output "name" {
   description = "Bucket name (for single use)."
-  value       = google_storage_bucket.loki.name
+  value       = google_storage_bucket.tempo.name
 }
 
 output "url" {
   description = "Bucket URL (for single use)."
-  value       = google_storage_bucket.loki.url
+  value       = google_storage_bucket.tempo.url
 }
