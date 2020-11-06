@@ -42,9 +42,11 @@ variable bucket_labels {
   description = "Map of labels to apply to the bucket"
   type        = map(string)
   default = {
-    "made-by"    = "terraform"
+    "made-by" = "terraform"
   }
 }
+
+# Secret Manager: Service Account key)
 
 variable secret_location {
   type        = string
@@ -55,6 +57,24 @@ variable secret_labels {
   description = "Map of labels to apply to the secret"
   type        = map(string)
   default = {
-    "made-by"    = "terraform"
+    "made-by" = "terraform"
   }
+}
+
+# Workload Identity
+
+variable workload_identity_enable {
+  type        = bool
+  description = "Enable Workload Identity configuration"
+  default     = false
+}
+
+variable namespace {
+  type        = string
+  description = "The Kubernetes namespace"
+}
+
+variable service_account {
+  type        = string
+  description = "The Kubernetes service account"
 }

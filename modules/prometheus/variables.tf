@@ -28,6 +28,8 @@ variable display_name {
   description = "The display name for the service account"
 }
 
+# Secret Manager: Service Account key)
+
 variable secret_location {
   type        = string
   description = "The secret location"
@@ -40,3 +42,22 @@ variable secret_labels {
     "made-by" = "terraform"
   }
 }
+
+# Workload Identity
+
+variable workload_identity_enable {
+  type        = bool
+  description = "Enable Workload Identity configuration"
+  default     = false
+}
+
+variable namespace {
+  type        = string
+  description = "The Kubernetes namespace"
+}
+
+variable service_account {
+  type        = string
+  description = "The Kubernetes service account"
+}
+
