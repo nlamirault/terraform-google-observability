@@ -18,10 +18,6 @@ resource "google_service_account" "loki" {
   description  = "Created by Terraform"
 }
 
-resource "google_service_account_key" "loki_sa_key" {
-  service_account_id = google_service_account.loki.name
-}
-
 resource "google_storage_bucket" "loki" {
   name          = local.name
   location      = var.bucket_location
@@ -35,7 +31,13 @@ resource "google_storage_bucket_iam_member" "loki" {
   member = format("serviceAccount:%s", google_service_account.loki.email)
 }
 
+resource "google_service_account_key" "loki_sa_key" {
+  count              = var.workload_identity_enable ? 0 : 1
+  service_account_id = google_service_account.loki.name
+}
+
 resource "google_secret_manager_secret" "loki_sa_key" {
+  count     = var.workload_identity_enable ? 0 : 1
   secret_id = "loki_service_account"
 
   labels = var.secret_labels
@@ -47,4 +49,11 @@ resource "google_secret_manager_secret" "loki_sa_key" {
       }
     }
   }
+}
+
+resource "google_service_account_iam_member" "loki" {
+  count              = var.workload_identity_enable ? 1 : 0
+  role               = "roles/iam.workloadIdentityUser"
+  service_account_id = google_service_account.loki.name
+  member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
 }

@@ -46,6 +46,8 @@ variable bucket_labels {
   }
 }
 
+# Secret Manager: Service Account key)
+
 variable secret_location {
   type        = string
   description = "The secret location"
@@ -59,3 +61,20 @@ variable secret_labels {
   }
 }
 
+# Workload Identity
+
+variable workload_identity_enable {
+  type        = bool
+  description = "Enable Workload Identity configuration"
+  default     = false
+}
+
+variable namespace {
+  type        = string
+  description = "The Kubernetes namespace"
+}
+
+variable service_account {
+  type        = string
+  description = "The Kubernetes service account"
+}

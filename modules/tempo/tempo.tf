@@ -12,12 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resource "google_storage_bucket" "tempo" {
-  name          = local.name
-  location      = var.bucket_location
-  storage_class = var.bucket_storage_class
-  labels        = var.bucket_labels
-}
 
 resource "google_service_account" "tempo" {
   account_id   = var.account_id
@@ -25,8 +19,11 @@ resource "google_service_account" "tempo" {
   description  = "Created by Terraform"
 }
 
-resource "google_service_account_key" "tempo_sa_key" {
-  service_account_id = google_service_account.tempo.name
+resource "google_storage_bucket" "tempo" {
+  name          = local.name
+  location      = var.bucket_location
+  storage_class = var.bucket_storage_class
+  labels        = var.bucket_labels
 }
 
 resource "google_storage_bucket_iam_member" "tempo" {
@@ -35,7 +32,13 @@ resource "google_storage_bucket_iam_member" "tempo" {
   member = format("serviceAccount:%s", google_service_account.tempo.email)
 }
 
+resource "google_service_account_key" "tempo_sa_key" {
+  count              = var.workload_identity_enable ? 0 : 1
+  service_account_id = google_service_account.tempo.name
+}
+
 resource "google_secret_manager_secret" "tempo_sa_key" {
+  count     = var.workload_identity_enable ? 0 : 1
   secret_id = "tempo_service_account"
 
   labels = var.secret_labels
@@ -47,4 +50,11 @@ resource "google_secret_manager_secret" "tempo_sa_key" {
       }
     }
   }
+}
+
+resource "google_service_account_iam_member" "tempo" {
+  count              = var.workload_identity_enable ? 1 : 0
+  role               = "roles/iam.workloadIdentityUser"
+  service_account_id = google_service_account.tempo.name
+  member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
 }

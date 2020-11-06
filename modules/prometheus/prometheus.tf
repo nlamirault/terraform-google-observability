@@ -18,17 +18,19 @@ resource "google_service_account" "prometheus" {
   description  = "Created by Terraform"
 }
 
-resource "google_service_account_key" "prometheus_sa_key" {
-  service_account_id = google_service_account.prometheus.name
-}
-
 resource "google_project_iam_member" "prometheus" {
   project = var.project
   role    = "roles/compute.instanceAdmin.v1"
   member  = format("serviceAccount:%s", google_service_account.prometheus.email)
 }
 
+resource "google_service_account_key" "prometheus_sa_key" {
+  count              = var.workload_identity_enable ? 0 : 1
+  service_account_id = google_service_account.prometheus.name
+}
+
 resource "google_secret_manager_secret" "prometheus_sa_key" {
+  count     = var.workload_identity_enable ? 0 : 1
   secret_id = "prometheus_service_account"
 
   labels = var.secret_labels
@@ -40,4 +42,11 @@ resource "google_secret_manager_secret" "prometheus_sa_key" {
       }
     }
   }
+}
+
+resource "google_service_account_iam_member" "prometheus" {
+  count              = var.workload_identity_enable ? 1 : 0
+  role               = "roles/iam.workloadIdentityUser"
+  service_account_id = google_service_account.prometheus.name
+  member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
 }
