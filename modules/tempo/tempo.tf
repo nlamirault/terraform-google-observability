@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 resource "google_service_account" "tempo" {
   account_id   = local.service_name
   display_name = "Tempo"
@@ -36,28 +35,7 @@ resource "google_storage_bucket_iam_member" "tempo" {
   member = format("serviceAccount:%s", google_service_account.tempo.email)
 }
 
-resource "google_service_account_key" "tempo_sa_key" {
-  count              = var.workload_identity_enable ? 0 : 1
-  service_account_id = google_service_account.tempo.name
-}
-
-resource "google_secret_manager_secret" "tempo_sa_key" {
-  count     = var.workload_identity_enable ? 0 : 1
-  secret_id = format("%s_sa", local.service_name)
-
-  labels = var.secret_labels
-
-  replication {
-    user_managed {
-      replicas {
-        location = var.secret_location
-      }
-    }
-  }
-}
-
 resource "google_service_account_iam_member" "tempo" {
-  count              = var.workload_identity_enable ? 1 : 0
   role               = "roles/iam.workloadIdentityUser"
   service_account_id = google_service_account.tempo.name
   member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)

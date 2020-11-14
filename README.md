@@ -7,6 +7,8 @@ This module consists of the following submodules:
 - [loki](https://github.com/nlamirault/terraform-google-observability/tree/master/modules/loki)
 - [tempo](https://github.com/nlamirault/terraform-google-observability/tree/master/modules/tempo)
 
+For GKE, enable [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity)
+
 See more details in each module's README.
 
 ## Terraform versions
