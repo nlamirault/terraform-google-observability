@@ -35,28 +35,7 @@ resource "google_storage_bucket_iam_member" "thanos" {
   member = format("serviceAccount:%s", google_service_account.thanos.email)
 }
 
-resource "google_service_account_key" "thanos_sa_key" {
-  count              = var.workload_identity_enable ? 0 : 1
-  service_account_id = google_service_account.thanos.name
-}
-
-resource "google_secret_manager_secret" "thanos_sa_key" {
-  count     = var.workload_identity_enable ? 0 : 1
-  secret_id = format("%s_sa", local.service_name)
-
-  labels = var.secret_labels
-
-  replication {
-    user_managed {
-      replicas {
-        location = var.secret_location
-      }
-    }
-  }
-}
-
 resource "google_service_account_iam_member" "thanos" {
-  count              = var.workload_identity_enable ? 1 : 0
   role               = "roles/iam.workloadIdentityUser"
   service_account_id = google_service_account.thanos.name
   member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
