@@ -12,6 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-locals {
-  service_name = format("%s-tempo", var.project)
+resource "google_kms_key_ring" "tempo" {
+  name     = local.service_name
+  location = "global"
+}
+
+resource "google_kms_crypto_key" "tempo" {
+  name            = local.service_name
+  key_ring        = google_kms_key_ring.tempo.id
+  rotation_period = "100000s"
+
+  #   lifecycle {
+  #     prevent_destroy = true
+  #   }
 }

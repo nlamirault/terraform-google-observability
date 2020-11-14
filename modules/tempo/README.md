@@ -24,9 +24,6 @@ module "tempo" {
   project = var.project
   region  = var.region
 
-  account_id_tempo   = var.account_id_tempo
-  display_name_tempo = var.display_name_tempo
-
   bucket_location      = var.bucket_location
   bucket_storage_class = var.bucket_storage_class
   bucket_labels        = var.bucket_labels
@@ -39,16 +36,13 @@ and variables :
 project  = "...."
 region = "...."
 
-account_id_tempo   = "tempo"
-display_name_tempo = "Loki for Portefaix"
-
 bucket_location = "europe-west1"
 
 bucket_storage_class = "STANDARD"
 
 bucket_labels = {
   customer = "masociete"
-  service  = "kubernetes"
+  service  = "tempo"
   env      = "prod"
   made-by  = "terraform"
 }
