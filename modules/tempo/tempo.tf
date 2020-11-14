@@ -14,8 +14,8 @@
 
 
 resource "google_service_account" "tempo" {
-  account_id   = var.account_id
-  display_name = var.display_name
+  account_id   = local.service_name
+  display_name = "Tempo"
   description  = "Created by Terraform"
 }
 
@@ -24,6 +24,10 @@ resource "google_storage_bucket" "tempo" {
   location      = var.bucket_location
   storage_class = var.bucket_storage_class
   labels        = var.bucket_labels
+
+  encryption {
+    default_kms_key_name = google_kms_crypto_key.tempo.name
+  }
 }
 
 resource "google_storage_bucket_iam_member" "tempo" {
@@ -39,7 +43,7 @@ resource "google_service_account_key" "tempo_sa_key" {
 
 resource "google_secret_manager_secret" "tempo_sa_key" {
   count     = var.workload_identity_enable ? 0 : 1
-  secret_id = "tempo_service_account"
+  secret_id = format("%s_sa", local.service_name)
 
   labels = var.secret_labels
 
