@@ -22,8 +22,6 @@ module "thanos" {
   project    = var.project
   location   = var.location
 
-  account_id_thanos   = var.account_id_thanos
-  display_name_thanos = var.display_name_thanos
   storage_class       = var.storage_class
   labels              = var.labels
 }
@@ -35,14 +33,11 @@ and variables :
 project  = "...."
 location = "...."
 
-account_id_thanos   = "thanos"
-display_name_thanos = "Prometheus for Portefaix"
-
 storage_class = "STANDARD"
 
 labels = {
   customer = "my-customer"
-  service  = "kubernetes"
+  service  = "thanos"
   env      = "preprod"
   made-by  = "terraform"
 }

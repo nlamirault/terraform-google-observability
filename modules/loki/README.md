@@ -42,7 +42,7 @@ bucket_storage_class = "STANDARD"
 
 bucket_labels = {
   customer = "masociete"
-  service  = "kubernetes"
+  service  = "loki"
   env      = "prod"
   made-by  = "terraform"
 }

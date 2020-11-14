@@ -20,9 +20,6 @@ module "prometheus" {
 
   project = var.project
   region  = var.region
-
-  account_id_prometheus   = var.account_id_prometheus
-  display_name_prometheus = var.display_name_prometheus
 }
 ```
 
@@ -31,9 +28,6 @@ and variables :
 ```hcl
 project  = "...."
 region = "...."
-
-account_id_prometheus   = "prometheus"
-display_name_prometheus = "Prometheus for Portefaix"
 }
 ```
 
