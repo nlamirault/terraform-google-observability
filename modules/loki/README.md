@@ -24,9 +24,6 @@ module "loki" {
   project = var.project
   region  = var.region
 
-  account_id_loki   = var.account_id_loki
-  display_name_loki = var.display_name_loki
-
   bucket_location      = var.bucket_location
   bucket_storage_class = var.bucket_storage_class
   bucket_labels        = var.bucket_labels
@@ -38,9 +35,6 @@ and variables :
 ```hcl
 project  = "...."
 region = "...."
-
-account_id_loki   = "loki"
-display_name_loki = "Loki for Portefaix"
 
 bucket_location = "europe-west1"
 
