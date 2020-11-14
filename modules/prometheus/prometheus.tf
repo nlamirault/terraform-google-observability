@@ -13,8 +13,8 @@
 # limitations under the License.
 
 resource "google_service_account" "prometheus" {
-  account_id   = var.account_id
-  display_name = var.display_name
+  account_id   = local.service_name
+  display_name = "Prometheus"
   description  = "Created by Terraform"
 }
 
@@ -31,7 +31,7 @@ resource "google_service_account_key" "prometheus_sa_key" {
 
 resource "google_secret_manager_secret" "prometheus_sa_key" {
   count     = var.workload_identity_enable ? 0 : 1
-  secret_id = "prometheus_service_account"
+  secret_id = format("%s_sa", local.service_name)
 
   labels = var.secret_labels
 

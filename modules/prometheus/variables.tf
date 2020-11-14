@@ -18,17 +18,7 @@ variable project {
   type = string
 }
 
-variable account_id {
-  type        = string
-  description = " The account id that is used to generate the service account email address and a stable unique id"
-}
-
-variable display_name {
-  type        = string
-  description = "The display name for the service account"
-}
-
-# Secret Manager: Service Account key)
+# Secret Manager: Service Account key
 
 variable secret_location {
   type        = string
