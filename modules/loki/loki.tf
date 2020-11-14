@@ -23,6 +23,10 @@ resource "google_storage_bucket" "loki" {
   location      = var.bucket_location
   storage_class = var.bucket_storage_class
   labels        = var.bucket_labels
+
+  encryption {
+    default_kms_key_name = google_kms_crypto_key.loki.name
+  }
 }
 
 resource "google_storage_bucket_iam_member" "loki" {
