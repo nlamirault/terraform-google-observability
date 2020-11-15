@@ -19,7 +19,7 @@ resource "google_service_account" "thanos" {
 }
 
 resource "google_storage_bucket" "thanos" {
-  name          = format("%s_thanos", var.project)
+  name          = local.service_name
   location      = var.bucket_location
   storage_class = var.bucket_storage_class
   labels        = var.bucket_labels
