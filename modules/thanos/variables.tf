@@ -47,3 +47,10 @@ variable service_account {
   type        = string
   description = "The Kubernetes service account"
 }
+
+# KMS
+
+variable keyring_location {
+  type        = string
+  description = "The KMS keyring location"
+}

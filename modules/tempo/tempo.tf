@@ -19,14 +19,18 @@ resource "google_service_account" "tempo" {
 }
 
 resource "google_storage_bucket" "tempo" {
-  name          = local.name
+  name          = local.service_name
   location      = var.bucket_location
   storage_class = var.bucket_storage_class
   labels        = var.bucket_labels
 
   encryption {
-    default_kms_key_name = google_kms_crypto_key.tempo.name
+    default_kms_key_name = google_kms_crypto_key.tempo.id
   }
+
+  # Ensure the KMS crypto-key IAM binding for the service account exists prior to the
+  # bucket attempting to utilise the crypto-key.
+  depends_on = [google_kms_crypto_key_iam_binding.binding]
 }
 
 resource "google_storage_bucket_iam_member" "tempo" {
@@ -37,6 +41,6 @@ resource "google_storage_bucket_iam_member" "tempo" {
 
 resource "google_service_account_iam_member" "tempo" {
   role               = "roles/iam.workloadIdentityUser"
-  service_account_id = google_service_account.tempo.name
+  service_account_id = google_service_account.tempo.id
   member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
 }
