@@ -1,5 +1,10 @@
 # ChangeLog
 
+## v3.1.0 (11/20/2020)
+
+- Documentation: tfsec badge (#4)
+- Kms IAM and location (#5)
+
 ## v3.0.0 (11/14/2020)
 
 - Add: Tfsec feature @nlamirault (#2)
