@@ -1,5 +1,9 @@
 # ChangeLog
 
+## v3.2.0 (11/20/2020)
+
+- Output for Prometheus Thanos sidecar usage (#6)
+
 ## v3.1.0 (11/20/2020)
 
 - Documentation: tfsec badge (#4)
