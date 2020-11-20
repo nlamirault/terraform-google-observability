@@ -11,3 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+output "email" {
+  description = "Service account email"
+  value       = google_service_account.prometheus.email
+}

@@ -17,12 +17,7 @@ output "bucket" {
   value       = google_storage_bucket.tempo
 }
 
-output "name" {
-  description = "Bucket name (for single use)."
-  value       = google_storage_bucket.tempo.name
-}
-
-output "url" {
-  description = "Bucket URL (for single use)."
-  value       = google_storage_bucket.tempo.url
+output "email" {
+  description = "Service account email"
+  value       = google_service_account.tempo.email
 }
