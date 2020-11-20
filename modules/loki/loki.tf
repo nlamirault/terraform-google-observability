@@ -19,14 +19,18 @@ resource "google_service_account" "loki" {
 }
 
 resource "google_storage_bucket" "loki" {
-  name          = local.name
+  name          = local.service_name
   location      = var.bucket_location
   storage_class = var.bucket_storage_class
   labels        = var.bucket_labels
 
   encryption {
-    default_kms_key_name = google_kms_crypto_key.loki.name
+    default_kms_key_name = google_kms_crypto_key.loki.id
   }
+
+  # Ensure the KMS crypto-key IAM binding for the service account exists prior to the
+  # bucket attempting to utilise the crypto-key.
+  depends_on = [google_kms_crypto_key_iam_binding.binding]
 }
 
 resource "google_storage_bucket_iam_member" "loki" {
