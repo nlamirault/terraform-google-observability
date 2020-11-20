@@ -17,12 +17,7 @@ output "bucket" {
   value       = google_storage_bucket.thanos
 }
 
-output "name" {
-  description = "Bucket name (for single use)."
-  value       = google_storage_bucket.thanos.name
-}
-
-output "url" {
-  description = "Bucket URL (for single use)."
-  value       = google_storage_bucket.thanos.url
+output "email" {
+  description = "Service account email"
+  value       = google_service_account.thanos.email
 }
