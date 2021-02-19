@@ -14,19 +14,19 @@
 
 # Prometheus
 
-variable project {
-  type = string
+variable "project" {
+  type        = string
+  description = "The project in which the resource belongs"
 }
 
 # Workload Identity
 
-variable namespace {
+variable "namespace" {
   type        = string
   description = "The Kubernetes namespace"
 }
 
-variable service_account {
+variable "service_account" {
   type        = string
   description = "The Kubernetes service account"
 }
-
