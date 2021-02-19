@@ -2,15 +2,6 @@
 
 Terraform module which configure Prometheus resources on Google Cloud.
 
-## Terraform versions
-
-Use Terraform `0.13` and Terraform Provider Google `3.45+`.
-
-These types of resources are supported:
-
-* [google_service_account](https://www.terraform.io/docs/providers/google/r/google_service_account.html)
-* [google_project_iam_member](https://www.terraform.io/docs/providers/google/r/google_project_iam.html#google_project_iam_member)
-
 ## Usage
 
 ```hcl
@@ -31,8 +22,45 @@ region = "...."
 }
 ```
 
-This module creates :
-
-* a ServiceAccount
-
 ## Documentation
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.13.0 |
+| google | >= 3.45.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| google | >= 3.45.0 |
+
+## Modules
+
+No Modules.
+
+## Resources
+
+| Name |
+|------|
+| [google_project_iam_member](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/project_iam_member) |
+| [google_service_account](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/service_account) |
+| [google_service_account_iam_member](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/service_account_iam_member) |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| namespace | The Kubernetes namespace | `string` | n/a | yes |
+| project | The project in which the resource belongs | `string` | n/a | yes |
+| service\_account | The Kubernetes service account | `string` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| email | Service account email |
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

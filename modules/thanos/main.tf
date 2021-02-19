@@ -12,7 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-output "email" {
-  description = "Service account email"
-  value       = google_service_account.grafana.email
+terraform {
+  required_version = ">= 0.13.0"
+
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 3.45.0"
+    }
+
+    # google-beta = {
+    #   source  = "hashicorp/google"
+    #   version = ">= 3.45.0"
+    # }
+  }
 }
