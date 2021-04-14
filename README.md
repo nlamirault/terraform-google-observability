@@ -12,7 +12,3 @@ This module consists of the following submodules:
 For GKE, enable [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity)
 
 See more details in each module's README.
-
-## Terraform versions
-
-Use Terraform `>= 0.13.3` minimum and Terraform Provider Google `3.40+`.
