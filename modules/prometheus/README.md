@@ -29,7 +29,7 @@ region = "...."
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13.0 |
+| terraform | >= 0.14.0 |
 | google | >= 3.45.0 |
 
 ## Providers

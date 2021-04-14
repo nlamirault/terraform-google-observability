@@ -24,13 +24,20 @@ resource "google_storage_bucket" "thanos" {
   storage_class = var.bucket_storage_class
   labels        = var.bucket_labels
 
-  encryption {
-    default_kms_key_name = google_kms_crypto_key.thanos.id
+  # encryption {
+  #   default_kms_key_name = google_kms_crypto_key.thanos.id
+  # }
+
+  dynamic "encryption" {
+    for_each = var.enable_kms ? [1] : []
+    content {
+      default_kms_key_name = google_kms_crypto_key.thanos[0].id
+    }
   }
 
   # Ensure the KMS crypto-key IAM binding for the service account exists prior to the
   # bucket attempting to utilise the crypto-key.
-  depends_on = [google_kms_crypto_key_iam_binding.binding]
+  depends_on = [google_kms_crypto_key_iam_binding.binding[0]]
 }
 
 resource "google_storage_bucket_iam_member" "thanos" {
