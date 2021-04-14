@@ -29,7 +29,7 @@ resource "google_storage_bucket" "thanos" {
   # }
 
   dynamic "encryption" {
-    for_each = var.custom_kms_key ? [1] : [0]
+    for_each = var.enable_kms ? [1] : []
     content {
       default_kms_key_name = google_kms_crypto_key.thanos[0].id
     }

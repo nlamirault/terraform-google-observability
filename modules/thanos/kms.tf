@@ -13,13 +13,13 @@
 # limitations under the License.
 
 resource "google_kms_key_ring" "thanos" {
-  count    = var.custom_kms_key ? 1 : 0
+  count    = var.enable_kms ? 1 : 0
   name     = local.service_name
   location = var.keyring_location
 }
 
 resource "google_kms_crypto_key" "thanos" {
-  count           = var.custom_kms_key ? 1 : 0
+  count           = var.enable_kms ? 1 : 0
   name            = local.service_name
   key_ring        = google_kms_key_ring.thanos[0].id
   rotation_period = "100000s"
@@ -33,7 +33,7 @@ data "google_storage_project_service_account" "gcs_account" {
 }
 
 resource "google_kms_crypto_key_iam_binding" "binding" {
-  count         = var.custom_kms_key ? 1 : 0
+  count         = var.enable_kms ? 1 : 0
   crypto_key_id = google_kms_crypto_key.thanos[0].id
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
 

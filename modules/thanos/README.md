@@ -73,7 +73,7 @@ No Modules.
 | bucket\_labels | Map of labels to apply to the bucket | `map(string)` | <pre>{<br>  "made-by": "terraform"<br>}</pre> | no |
 | bucket\_location | The bucket location | `string` | n/a | yes |
 | bucket\_storage\_class | Bucket storage class. | `string` | `"MULTI_REGIONAL"` | no |
-| custom\_kms\_key | Create a custom KMS key | `bool` | n/a | yes |
+| enable\_kms | Enable custom KMS key | `bool` | n/a | yes |
 | keyring\_location | The KMS keyring location | `string` | n/a | yes |
 | namespace | The Kubernetes namespace | `string` | n/a | yes |
 | project | The project in which the resource belongs | `string` | n/a | yes |

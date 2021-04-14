@@ -52,9 +52,9 @@ variable "service_account" {
 
 # KMS
 
-variable "custom_kms_key" {
+variable "enable_kms" {
   type        = bool
-  description = "Create a custom KMS key"
+  description = "Enable custom KMS key"
 }
 
 variable "keyring_location" {
