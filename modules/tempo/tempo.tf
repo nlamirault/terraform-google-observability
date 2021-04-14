@@ -24,8 +24,11 @@ resource "google_storage_bucket" "tempo" {
   storage_class = var.bucket_storage_class
   labels        = var.bucket_labels
 
-  encryption {
-    default_kms_key_name = google_kms_crypto_key.tempo.id
+  dynamic "encryption" {
+    for_each = var.enable_kms ? [1] : []
+    content {
+      default_kms_key_name = google_kms_crypto_key.tempo[0].id
+    }
   }
 
   # Ensure the KMS crypto-key IAM binding for the service account exists prior to the

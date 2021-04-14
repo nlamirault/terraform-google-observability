@@ -52,6 +52,11 @@ variable "service_account" {
 
 # KMS
 
+variable "enable_kms" {
+  type        = bool
+  description = "Enable custom KMS key"
+}
+
 variable "keyring_location" {
   type        = string
   description = "The KMS keyring location"
