@@ -20,7 +20,7 @@ resource "google_service_account" "prometheus" {
 
 resource "google_project_iam_member" "prometheus" {
   project = var.project
-  role    = "roles/compute.instanceAdmin.v1"
+  role    = "roles/monitoring.viewer"
   member  = format("serviceAccount:%s", google_service_account.prometheus.email)
 }
 
