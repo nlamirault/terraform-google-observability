@@ -51,3 +51,13 @@ resource "google_service_account_iam_member" "thanos" {
   service_account_id = google_service_account.thanos.name
   member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
 }
+
+data "google_service_account" "prometheus" {
+  account_id = var.prometheus_service_account
+}
+
+resource "google_storage_bucket_iam_member" "prometheus" {
+  bucket = google_storage_bucket.thanos.name
+  role   = "roles/storage.objectAdmin"
+  member = format("serviceAccount:%s", data.google_service_account.prometheus.email)
+}
