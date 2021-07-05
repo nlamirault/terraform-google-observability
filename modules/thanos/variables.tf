@@ -50,6 +50,11 @@ variable "service_account" {
   description = "The Kubernetes service account"
 }
 
+variable "prometheus_service_account" {
+  type        = string
+  description = "The GCP service account ID for Prometheus"
+}
+
 # KMS
 
 variable "enable_kms" {
