@@ -52,7 +52,7 @@ variable "service_account" {
 
 variable "prometheus_service_account" {
   type        = string
-  description = "The GCP service account ID for Prometheus"
+  description = "The Google service account ID of Prometheus"
 }
 
 # KMS
