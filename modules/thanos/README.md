@@ -40,7 +40,7 @@ labels = {
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.14.0 |
+| terraform | >= 1.0.0 |
 | google | >= 3.45.0 |
 
 ## Providers
@@ -61,6 +61,7 @@ No Modules.
 | [google_kms_crypto_key_iam_binding](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/kms_crypto_key_iam_binding) |
 | [google_kms_key_ring](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/kms_key_ring) |
 | [google_service_account](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/service_account) |
+| [google_service_account](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/data-sources/service_account) |
 | [google_service_account_iam_member](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/service_account_iam_member) |
 | [google_storage_bucket](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/storage_bucket) |
 | [google_storage_bucket_iam_member](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/storage_bucket_iam_member) |
@@ -77,6 +78,7 @@ No Modules.
 | keyring\_location | The KMS keyring location | `string` | n/a | yes |
 | namespace | The Kubernetes namespace | `string` | n/a | yes |
 | project | The project in which the resource belongs | `string` | n/a | yes |
+| prometheus\_service\_account | The Google service account ID of Prometheus | `string` | n/a | yes |
 | service\_account | The Kubernetes service account | `string` | n/a | yes |
 
 ## Outputs
