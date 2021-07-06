@@ -60,8 +60,8 @@ No Modules.
 | [google_kms_crypto_key](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/kms_crypto_key) |
 | [google_kms_crypto_key_iam_binding](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/kms_crypto_key_iam_binding) |
 | [google_kms_key_ring](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/kms_key_ring) |
-| [google_service_account](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/service_account) |
 | [google_service_account](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/data-sources/service_account) |
+| [google_service_account](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/service_account) |
 | [google_service_account_iam_member](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/service_account_iam_member) |
 | [google_storage_bucket](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/storage_bucket) |
 | [google_storage_bucket_iam_member](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/storage_bucket_iam_member) |
