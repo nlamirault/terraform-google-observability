@@ -79,7 +79,7 @@ No Modules.
 | namespace | The Kubernetes namespace | `string` | n/a | yes |
 | project | The project in which the resource belongs | `string` | n/a | yes |
 | prometheus\_service\_account | The Google service account ID of Prometheus | `string` | n/a | yes |
-| service\_account | The Kubernetes service account | `string` | n/a | yes |
+| service\_account | The Kubernetes service account | `list(string)` | n/a | yes |
 
 ## Outputs
 
