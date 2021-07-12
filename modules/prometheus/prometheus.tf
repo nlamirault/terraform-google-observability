@@ -18,9 +18,15 @@ resource "google_service_account" "prometheus" {
   description  = "Created by Terraform"
 }
 
-resource "google_project_iam_member" "prometheus" {
+resource "google_project_iam_member" "compute" {
   project = var.project
   role    = "roles/compute.viewer"
+  member  = format("serviceAccount:%s", google_service_account.prometheus.email)
+}
+
+resource "google_project_iam_member" "secret_manager" {
+  project = var.project
+  role    = "roles/secretmanager.secretAccessor"
   member  = format("serviceAccount:%s", google_service_account.prometheus.email)
 }
 
