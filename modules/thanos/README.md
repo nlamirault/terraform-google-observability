@@ -61,7 +61,6 @@ No Modules.
 | [google_kms_crypto_key_iam_binding](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/kms_crypto_key_iam_binding) |
 | [google_kms_key_ring](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/kms_key_ring) |
 | [google_project_iam_member](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/project_iam_member) |
-| [google_service_account](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/data-sources/service_account) |
 | [google_service_account](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/service_account) |
 | [google_service_account_iam_member](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/service_account_iam_member) |
 | [google_storage_bucket](https://registry.terraform.io/providers/hashicorp/google/3.45.0/docs/resources/storage_bucket) |
@@ -88,4 +87,5 @@ No Modules.
 |------|-------------|
 | bucket | Bucket resource (for single use). |
 | email | Service account email |
+| sidecar\_email | Service account email for sidecar |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -21,3 +21,8 @@ output "email" {
   description = "Service account email"
   value       = google_service_account.thanos.email
 }
+
+output "sidecar_email" {
+  description = "Service account email for sidecar"
+  value       = google_service_account.prometheus_sidecar.email
+}

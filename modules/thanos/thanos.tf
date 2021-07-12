@@ -30,20 +30,22 @@ resource "google_project_iam_member" "secret_manager_thanos" {
   member  = format("serviceAccount:%s", google_service_account.thanos.email)
 }
 
-data "google_service_account" "prometheus" {
-  account_id = var.prometheus_service_account
+resource "google_service_account" "prometheus_sidecar" {
+  account_id   = var.prometheus_service_account
+  display_name = "Prometheus Thanos sidecar"
+  description  = "Created by Terraform"
 }
 
 resource "google_storage_bucket_iam_member" "storage_prometheus" {
   bucket = google_storage_bucket.thanos.name
   role   = "roles/storage.objectAdmin"
-  member = format("serviceAccount:%s", data.google_service_account.prometheus.email)
+  member = format("serviceAccount:%s", google_service_account.prometheus_sidecar.email)
 }
 
 resource "google_project_iam_member" "secret_manager_prometheus" {
   project = var.project
   role    = "roles/secretmanager.secretAccessor"
-  member  = format("serviceAccount:%s", google_service_account.prometheus.email)
+  member  = format("serviceAccount:%s", google_service_account.prometheus_sidecar.email)
 }
 
 resource "google_service_account_iam_member" "thanos" {
