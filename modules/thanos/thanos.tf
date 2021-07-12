@@ -18,28 +18,34 @@ resource "google_service_account" "thanos" {
   description  = "Created by Terraform"
 }
 
-resource "google_storage_bucket" "thanos" {
-  name          = local.service_name
-  location      = var.bucket_location
-  storage_class = var.bucket_storage_class
-  labels        = var.bucket_labels
-
-  dynamic "encryption" {
-    for_each = var.enable_kms ? [1] : []
-    content {
-      default_kms_key_name = google_kms_crypto_key.thanos[0].id
-    }
-  }
-
-  # Ensure the KMS crypto-key IAM binding for the service account exists prior to the
-  # bucket attempting to utilise the crypto-key.
-  depends_on = [google_kms_crypto_key_iam_binding.binding[0]]
-}
-
-resource "google_storage_bucket_iam_member" "thanos" {
+resource "google_storage_bucket_iam_member" "storage_thanos" {
   bucket = google_storage_bucket.thanos.name
   role   = "roles/storage.objectAdmin"
   member = format("serviceAccount:%s", google_service_account.thanos.email)
+}
+
+resource "google_project_iam_member" "secret_manager_thanos" {
+  project = var.project
+  role    = "roles/secretmanager.secretAccessor"
+  member  = format("serviceAccount:%s", google_service_account.thanos.email)
+}
+
+resource "google_service_account" "prometheus_sidecar" {
+  account_id   = var.prometheus_service_account
+  display_name = "Prometheus Thanos sidecar"
+  description  = "Created by Terraform"
+}
+
+resource "google_storage_bucket_iam_member" "storage_prometheus" {
+  bucket = google_storage_bucket.thanos.name
+  role   = "roles/storage.objectAdmin"
+  member = format("serviceAccount:%s", google_service_account.prometheus_sidecar.email)
+}
+
+resource "google_project_iam_member" "secret_manager_prometheus" {
+  project = var.project
+  role    = "roles/secretmanager.secretAccessor"
+  member  = format("serviceAccount:%s", google_service_account.prometheus_sidecar.email)
 }
 
 resource "google_service_account_iam_member" "thanos" {
@@ -47,14 +53,4 @@ resource "google_service_account_iam_member" "thanos" {
   role               = "roles/iam.workloadIdentityUser"
   service_account_id = google_service_account.thanos.name
   member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, each.key)
-}
-
-data "google_service_account" "prometheus" {
-  account_id = var.prometheus_service_account
-}
-
-resource "google_storage_bucket_iam_member" "prometheus" {
-  bucket = google_storage_bucket.thanos.name
-  role   = "roles/storage.objectAdmin"
-  member = format("serviceAccount:%s", data.google_service_account.prometheus.email)
 }

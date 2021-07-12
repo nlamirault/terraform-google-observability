@@ -12,17 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-output "bucket" {
-  description = "Bucket resource (for single use)."
-  value       = google_storage_bucket.thanos
-}
+resource "google_storage_bucket" "tempo" {
+  name          = local.service_name
+  location      = var.bucket_location
+  storage_class = var.bucket_storage_class
+  labels        = var.bucket_labels
 
-output "email" {
-  description = "Service account email"
-  value       = google_service_account.thanos.email
-}
+  dynamic "encryption" {
+    for_each = var.enable_kms ? [1] : []
+    content {
+      default_kms_key_name = google_kms_crypto_key.tempo[0].id
+    }
+  }
 
-output "sidecar_email" {
-  description = "Service account email for sidecar"
-  value       = google_service_account.prometheus_sidecar.email
+  # Ensure the KMS crypto-key IAM binding for the service account exists prior to the
+  # bucket attempting to utilise the crypto-key.
+  depends_on = [google_kms_crypto_key_iam_binding.binding]
 }
