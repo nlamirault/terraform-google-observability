@@ -24,10 +24,6 @@ resource "google_storage_bucket" "thanos" {
   storage_class = var.bucket_storage_class
   labels        = var.bucket_labels
 
-  # encryption {
-  #   default_kms_key_name = google_kms_crypto_key.thanos.id
-  # }
-
   dynamic "encryption" {
     for_each = var.enable_kms ? [1] : []
     content {
@@ -47,9 +43,10 @@ resource "google_storage_bucket_iam_member" "thanos" {
 }
 
 resource "google_service_account_iam_member" "thanos" {
+  for_each           = toset(var.service_account)
   role               = "roles/iam.workloadIdentityUser"
   service_account_id = google_service_account.thanos.name
-  member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
+  member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, each.key)
 }
 
 data "google_service_account" "prometheus" {
