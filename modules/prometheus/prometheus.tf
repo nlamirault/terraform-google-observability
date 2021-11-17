@@ -37,7 +37,7 @@ module "iam" {
   service_accounts = [
     module.service_account.email
   ]
-  mode = "authoritative"
+  mode = "additive"
 
   bindings = {
     "roles/iam.workloadIdentityUser" = [

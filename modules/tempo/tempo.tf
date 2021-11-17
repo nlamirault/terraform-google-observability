@@ -32,7 +32,7 @@ module "iam_service_accounts" {
   version = "7.3.0"
 
   project = var.project
-  mode    = "authoritative"
+  mode    = "additive"
 
   service_accounts = [
     module.service_account.email
