@@ -13,6 +13,6 @@
 # limitations under the License.
 
 output "email" {
-  description = "Service account email"
-  value       = google_service_account.grafana.email
+  description = "Service account email for Grafana"
+  value       = module.service_account.email
 }

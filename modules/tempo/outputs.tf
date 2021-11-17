@@ -14,10 +14,10 @@
 
 output "bucket" {
   description = "Bucket resource (for single use)."
-  value       = google_storage_bucket.tempo
+  value       = module.bucket.bucket
 }
 
 output "email" {
   description = "Service account email"
-  value       = google_service_account.tempo.email
+  value       = module.service_account.email
 }

@@ -14,10 +14,10 @@
 
 output "bucket" {
   description = "Bucket resource (for single use)."
-  value       = google_storage_bucket.loki
+  value       = module.bucket.bucket
 }
 
 output "email" {
   description = "Service account email"
-  value       = google_service_account.loki.email
+  value       = module.service_account.email
 }

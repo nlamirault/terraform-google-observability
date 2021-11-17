@@ -14,13 +14,13 @@
 
 resource "google_kms_key_ring" "tempo" {
   count    = var.enable_kms ? 1 : 0
-  name     = local.service_name
+  name     = local.service
   location = var.keyring_location
 }
 
 resource "google_kms_crypto_key" "tempo" {
   count           = var.enable_kms ? 1 : 0
-  name            = local.service_name
+  name            = local.service
   key_ring        = google_kms_key_ring.tempo[0].id
   rotation_period = "100000s"
 

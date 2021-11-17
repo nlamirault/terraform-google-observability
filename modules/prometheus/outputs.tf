@@ -14,5 +14,5 @@
 
 output "email" {
   description = "Service account email"
-  value       = google_service_account.prometheus.email
+  value       = module.service_account.email
 }

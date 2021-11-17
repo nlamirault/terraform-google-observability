@@ -14,15 +14,10 @@
 
 output "bucket" {
   description = "Bucket resource (for single use)."
-  value       = google_storage_bucket.thanos
+  value       = module.bucket.bucket
 }
 
-output "email" {
+output "emails" {
   description = "Service account email"
-  value       = google_service_account.thanos.email
-}
-
-output "sidecar_email" {
-  description = "Service account email for sidecar"
-  value       = google_service_account.prometheus_sidecar.email
+  value       = module.service_account.emails
 }

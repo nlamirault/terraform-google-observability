@@ -12,20 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resource "google_service_account" "grafana" {
-  account_id   = local.service_name
-  display_name = "Grafana"
-  description  = "Created by Terraform"
+module "service_account" {
+  source  = "terraform-google-modules/service-accounts/google"
+  version = "4.0.3"
+
+  project_id = var.project
+
+  names = [
+    local.service
+  ]
+
+  project_roles = [
+    format("%s=>roles/monitoring.viewer", var.project),
+    format("%s=>roles/secretmanager.secretAccessor", var.project),
+  ]
 }
 
-resource "google_project_iam_member" "grafana" {
+module "iam" {
+  source  = "terraform-google-modules/iam/google//modules/service_accounts_iam"
+  version = "7.3.0"
+
   project = var.project
-  role    = "roles/monitoring.viewer"
-  member  = format("serviceAccount:%s", google_service_account.grafana.email)
-}
 
-resource "google_service_account_iam_member" "grafana" {
-  role               = "roles/iam.workloadIdentityUser"
-  service_account_id = google_service_account.grafana.name
-  member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
+  service_accounts = [
+    module.service_account.email
+  ]
+  mode = "authoritative"
+
+  bindings = {
+    "roles/iam.workloadIdentityUser" = [
+      format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
+    ]
+  }
 }
