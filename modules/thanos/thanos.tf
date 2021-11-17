@@ -12,45 +12,109 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resource "google_service_account" "thanos" {
-  account_id   = local.service_name
-  display_name = "Thanos"
-  description  = "Created by Terraform"
+module "service_account" {
+  source  = "terraform-google-modules/service-accounts/google"
+  version = "4.0.3"
+
+  project_id = var.project
+
+  names = [
+    local.service,
+    var.prometheus_service_account
+  ]
+
+  project_roles = [
+    format("%s=>roles/secretmanager.secretAccessor", var.project),
+  ]
 }
 
-resource "google_storage_bucket_iam_member" "storage_thanos" {
-  bucket = google_storage_bucket.thanos.name
-  role   = "roles/storage.objectAdmin"
-  member = format("serviceAccount:%s", google_service_account.thanos.email)
-}
+module "iam_service_accounts" {
+  source  = "terraform-google-modules/iam/google//modules/service_accounts_iam"
+  version = "7.3.0"
 
-resource "google_project_iam_member" "secret_manager_thanos" {
   project = var.project
-  role    = "roles/secretmanager.secretAccessor"
-  member  = format("serviceAccount:%s", google_service_account.thanos.email)
+  mode    = "authoritative"
+
+  service_accounts = module.service_account.emails_list
+
+  bindings = {
+    "roles/iam.workloadIdentityUser" = formatlist("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
+  }
 }
 
-resource "google_service_account" "prometheus_sidecar" {
-  account_id   = var.prometheus_service_account
-  display_name = "Prometheus Thanos sidecar"
-  description  = "Created by Terraform"
+module "bucket" {
+  source  = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
+  version = "3.0.0"
+
+  name            = format("%s-%s", var.project, local.service)
+  project_id      = var.project
+  location        = var.bucket_location
+  storage_class   = var.bucket_storage_class
+  labels          = var.bucket_labels
+  lifecycle_rules = var.lifecycle_rules
+
+  encryption = var.enable_kms ? {
+    default_kms_key_name = google_kms_crypto_key.thanos[0].name
+  } : null
+
+  # https://github.com/terraform-google-modules/terraform-google-cloud-storage/issues/142
+  # iam_members = [{
+  #   role   = "roles/storage.objectAdmin"
+  #   member = format("serviceAccount:%s", module.service_account.email)
+  # }]
 }
 
-resource "google_storage_bucket_iam_member" "storage_prometheus" {
-  bucket = google_storage_bucket.thanos.name
-  role   = "roles/storage.objectAdmin"
-  member = format("serviceAccount:%s", google_service_account.prometheus_sidecar.email)
+module "iam_storage_buckets" {
+  source  = "terraform-google-modules/iam/google//modules/storage_buckets_iam"
+  version = "7.3.0"
+
+  storage_buckets = [module.bucket.bucket.name]
+  mode            = "authoritative"
+
+  bindings = {
+    "roles/storage.objectAdmin" = formatlist("serviceAccount:%s", module.service_account.emails_list)
+  }
 }
 
-resource "google_project_iam_member" "secret_manager_prometheus" {
-  project = var.project
-  role    = "roles/secretmanager.secretAccessor"
-  member  = format("serviceAccount:%s", google_service_account.prometheus_sidecar.email)
-}
+# resource "google_service_account" "thanos" {
+#   account_id   = local.service_name
+#   display_name = "Thanos"
+#   description  = "Created by Terraform"
+# }
 
-resource "google_service_account_iam_member" "thanos" {
-  for_each           = toset(var.service_account)
-  role               = "roles/iam.workloadIdentityUser"
-  service_account_id = google_service_account.thanos.name
-  member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, each.key)
-}
+# resource "google_storage_bucket_iam_member" "storage_thanos" {
+#   bucket = google_storage_bucket.thanos.name
+#   role   = "roles/storage.objectAdmin"
+#   member = format("serviceAccount:%s", google_service_account.thanos.email)
+# }
+
+# resource "google_project_iam_member" "secret_manager_thanos" {
+#   project = var.project
+#   role    = "roles/secretmanager.secretAccessor"
+#   member  = format("serviceAccount:%s", google_service_account.thanos.email)
+# }
+
+# resource "google_service_account" "prometheus_sidecar" {
+#   account_id   = var.prometheus_service_account
+#   display_name = "Prometheus Thanos sidecar"
+#   description  = "Created by Terraform"
+# }
+
+# resource "google_storage_bucket_iam_member" "storage_prometheus" {
+#   bucket = google_storage_bucket.thanos.name
+#   role   = "roles/storage.objectAdmin"
+#   member = format("serviceAccount:%s", google_service_account.prometheus_sidecar.email)
+# }
+
+# resource "google_project_iam_member" "secret_manager_prometheus" {
+#   project = var.project
+#   role    = "roles/secretmanager.secretAccessor"
+#   member  = format("serviceAccount:%s", google_service_account.prometheus_sidecar.email)
+# }
+
+# resource "google_service_account_iam_member" "thanos" {
+#   for_each           = toset(var.service_account)
+#   role               = "roles/iam.workloadIdentityUser"
+#   service_account_id = google_service_account.thanos.name
+#   member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, each.key)
+# }

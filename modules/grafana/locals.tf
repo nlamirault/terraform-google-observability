@@ -13,5 +13,5 @@
 # limitations under the License.
 
 locals {
-  service_name = format("%s-grafana", var.project)
+  service = "grafana"
 }
