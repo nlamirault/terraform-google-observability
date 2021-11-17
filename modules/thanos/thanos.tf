@@ -35,9 +35,7 @@ module "iam_service_accounts" {
   project = var.project
   mode    = "authoritative"
 
-  service_accounts = [
-    module.service_account.email
-  ]
+  service_accounts = module.service_account.emails_list
 
   bindings = {
     "roles/iam.workloadIdentityUser" = formatlist("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
@@ -70,15 +68,11 @@ module "iam_storage_buckets" {
   source  = "terraform-google-modules/iam/google//modules/storage_buckets_iam"
   version = "7.3.0"
 
-  for_each = module.service_account.emails
-
   storage_buckets = [module.bucket.bucket.name]
   mode            = "authoritative"
 
   bindings = {
-    "roles/storage.objectAdmin" = [
-      format("serviceAccount:%s", each.value) #module.service_account.email)
-    ]
+    "roles/storage.objectAdmin" = formatlist("serviceAccount:%s", module.service_account.emails_list)
   }
 }
 
