@@ -93,3 +93,23 @@ variable "keyring_location" {
   type        = string
   description = "The KMS keyring location"
 }
+
+variable "owners" {
+  description = "List of comma-separated owners for each key declared in set_owners_for."
+  type        = list(string)
+  default     = []
+}
+
+variable "keys" {
+  description = "Key names."
+  type        = list(string)
+  default     = []
+}
+
+variable "kms_labels" {
+  description = "Map of labels to apply to the KMS resources"
+  type        = map(string)
+  default = {
+    "made-by" = "terraform"
+  }
+}
