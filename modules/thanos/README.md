@@ -41,29 +41,29 @@ labels = {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | < 4.0.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | 4.5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | < 4.0.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.5.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bucket"></a> [bucket](#module\_bucket) | terraform-google-modules/cloud-storage/google//modules/simple_bucket | 3.0.0 |
-| <a name="module_iam_service_accounts"></a> [iam\_service\_accounts](#module\_iam\_service\_accounts) | terraform-google-modules/iam/google//modules/service_accounts_iam | 7.3.0 |
-| <a name="module_iam_storage_buckets"></a> [iam\_storage\_buckets](#module\_iam\_storage\_buckets) | terraform-google-modules/iam/google//modules/storage_buckets_iam | 7.3.0 |
-| <a name="module_kms"></a> [kms](#module\_kms) | terraform-google-modules/kms/google | 2.0.1 |
+| <a name="module_bucket"></a> [bucket](#module\_bucket) | terraform-google-modules/cloud-storage/google//modules/simple_bucket | 3.1.0 |
+| <a name="module_iam_service_accounts"></a> [iam\_service\_accounts](#module\_iam\_service\_accounts) | terraform-google-modules/iam/google//modules/service_accounts_iam | 7.4.0 |
+| <a name="module_iam_storage_buckets"></a> [iam\_storage\_buckets](#module\_iam\_storage\_buckets) | terraform-google-modules/iam/google//modules/storage_buckets_iam | 7.4.0 |
+| <a name="module_kms"></a> [kms](#module\_kms) | terraform-google-modules/kms/google | 2.1.0 |
 | <a name="module_service_account"></a> [service\_account](#module\_service\_account) | terraform-google-modules/service-accounts/google | 4.0.3 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [google_storage_project_service_account.gcs_account](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/storage_project_service_account) | data source |
+| [google_storage_project_service_account.gcs_account](https://registry.terraform.io/providers/hashicorp/google/4.5.0/docs/data-sources/storage_project_service_account) | data source |
 
 ## Inputs
 
