@@ -44,13 +44,13 @@ bucket_labels = {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | 4.5.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.0.0, < 5.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.5.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 4.0.0, < 5.0.0 |
 
 ## Modules
 
@@ -66,7 +66,7 @@ bucket_labels = {
 
 | Name | Type |
 |------|------|
-| [google_storage_project_service_account.gcs_account](https://registry.terraform.io/providers/hashicorp/google/4.5.0/docs/data-sources/storage_project_service_account) | data source |
+| [google_storage_project_service_account.gcs_account](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/storage_project_service_account) | data source |
 
 ## Inputs
 

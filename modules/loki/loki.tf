@@ -35,7 +35,9 @@ module "iam_service_accounts" {
   mode    = "additive"
 
   service_accounts = [
-    module.service_account.email
+    # https://github.com/terraform-google-modules/terraform-google-cloud-storage/issues/142
+    # module.service_account.email
+    format("%s@%s.iam.gserviceaccount.com", local.service, var.project),
   ]
 
   bindings = {
@@ -76,7 +78,8 @@ module "iam_storage_buckets" {
 
   bindings = {
     "roles/storage.objectAdmin" = [
-      format("serviceAccount:%s", module.service_account.email)
+      # https://github.com/terraform-google-modules/terraform-google-cloud-storage/issues/142
+      format("serviceAccount:%s@%s.iam.gserviceaccount.com", local.service, var.project),
     ]
   }
 }
