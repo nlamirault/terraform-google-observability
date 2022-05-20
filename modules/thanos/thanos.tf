@@ -30,7 +30,7 @@ module "service_account" {
 
 module "iam_service_accounts" {
   source  = "terraform-google-modules/iam/google//modules/service_accounts_iam"
-  version = "7.4.0"
+  version = "7.4.1"
 
   project = var.project
   # mode    = "additive"
@@ -75,7 +75,7 @@ module "bucket" {
 
 module "iam_storage_buckets" {
   source  = "terraform-google-modules/iam/google//modules/storage_buckets_iam"
-  version = "7.4.0"
+  version = "7.4.1"
 
   storage_buckets = [module.bucket.bucket.name]
   # mode            = "additive"
