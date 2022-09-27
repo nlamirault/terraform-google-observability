@@ -14,4 +14,5 @@
 
 locals {
   service = "loki"
+  bucket_name = format("%s-%s", var.project, local.service)
 }
