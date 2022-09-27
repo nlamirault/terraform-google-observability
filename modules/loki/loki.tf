@@ -12,9 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+module "kms" {
+  source  = "terraform-google-modules/kms/google"
+  version = "2.2.1"
+
+  count = var.enable_kms ? 1 : 0
+
+  project_id     = var.project
+  location       = var.keyring_location
+  keyring        = local.service
+  keys           = var.keys
+  set_owners_for = var.keys
+  owners         = var.owners
+
+  encrypters = [
+    data.google_storage_project_service_account.gcs_account.email_address
+  ]
+  decrypters = [
+    data.google_storage_project_service_account.gcs_account.email_address
+  ]
+
+  labels = var.kms_labels
+}
+
 module "workload_identity" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
-  version = "20.0.0"
+  version = "23.1.0"
 
   project_id = var.project
 
@@ -25,6 +48,7 @@ module "workload_identity" {
   namespace           = var.namespace
 }
 
+#tfsec:ignore:google-storage-bucket-encryption-customer-key
 module "bucket" {
   source  = "terraform-google-modules/cloud-storage/google"
   version = "3.2.0"
@@ -38,4 +62,8 @@ module "bucket" {
     local.bucket_name = true
   }
   encryption_key_names = var.enable_kms ? module.kms.keys : {}
+  location             = var.bucket_location
+  storage_class        = var.bucket_storage_class
+  labels               = var.bucket_labels
+  lifecycle_rules      = var.lifecycle_rules
 }

@@ -12,36 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-module "service_account" {
-  source  = "terraform-google-modules/service-accounts/google"
-  version = "4.1.1"
+module "workload_identity" {
+  source  = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
+  version = "23.1.0"
 
-  project_id = var.project
-
-  names = [
-    local.service
+  project_id          = var.project
+  use_existing_k8s_sa = true
+  annotate_k8s_sa     = false
+  name                = local.service
+  k8s_sa_name         = var.service_account
+  namespace           = var.namespace
+  roles = [
+    "roles/monitoring.viewer",
+    "roles/secretmanager.secretAccessor"
   ]
-
-  project_roles = [
-    format("%s=>roles/monitoring.viewer", var.project),
-    format("%s=>roles/secretmanager.secretAccessor", var.project),
-  ]
-}
-
-module "iam" {
-  source  = "terraform-google-modules/iam/google//modules/service_accounts_iam"
-  version = "7.4.1"
-
-  project = var.project
-
-  service_accounts = [
-    module.service_account.email
-  ]
-  mode = "additive"
-
-  bindings = {
-    "roles/iam.workloadIdentityUser" = [
-      format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
-    ]
-  }
 }

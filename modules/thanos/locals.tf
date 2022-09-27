@@ -13,5 +13,6 @@
 # limitations under the License.
 
 locals {
-  service = "thanos"
+  service     = "thanos"
+  bucket_name = format("%s-%s", var.project, local.service)
 }

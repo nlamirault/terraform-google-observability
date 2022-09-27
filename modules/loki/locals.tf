@@ -13,6 +13,6 @@
 # limitations under the License.
 
 locals {
-  service = "loki"
+  service     = "loki"
   bucket_name = format("%s-%s", var.project, local.service)
 }
