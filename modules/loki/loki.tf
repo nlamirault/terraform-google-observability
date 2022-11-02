@@ -39,20 +39,19 @@ module "workload_identity" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
   version = "23.1.0"
 
-  name            = format("%s-%s", var.project, local.service)
-  project_id      = var.project
-  location        = var.bucket_location
-  storage_class   = var.bucket_storage_class
-  labels          = var.bucket_labels
-  lifecycle_rules = var.lifecycle_rules
-
-  project_id = var.project
-
+  project_id          = var.project
   use_existing_k8s_sa = true
   annotate_k8s_sa     = false
   name                = local.service
   k8s_sa_name         = var.service_account
   namespace           = var.namespace
+  roles = [
+    "storage.objects.create",
+    "storage.objects.delete",
+    "storage.objects.get",
+    "storage.buckets.get",
+    "roles/secretmanager.secretAccessor"
+  ]
 }
 
 #tfsec:ignore:google-storage-bucket-encryption-customer-key
