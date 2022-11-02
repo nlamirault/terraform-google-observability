@@ -46,6 +46,10 @@ module "workload_identity" {
   k8s_sa_name         = var.service_account
   namespace           = var.namespace
   roles = [
+    "storage.objects.create",
+    "storage.objects.delete",
+    "storage.objects.get",
+    "storage.buckets.get",
     "roles/secretmanager.secretAccessor"
   ]
 }
