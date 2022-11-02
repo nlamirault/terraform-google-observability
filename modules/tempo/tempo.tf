@@ -57,7 +57,7 @@ module "workload_identity" {
 #tfsec:ignore:google-storage-bucket-encryption-customer-key
 module "bucket" {
   source  = "terraform-google-modules/cloud-storage/google"
-  version = "3.2.0"
+  version = "3.4.0"
 
   project_id      = var.project
   names           = [local.bucket_name]

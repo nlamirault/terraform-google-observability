@@ -39,6 +39,13 @@ module "workload_identity" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
   version = "23.1.0"
 
+  name            = format("%s-%s", var.project, local.service)
+  project_id      = var.project
+  location        = var.bucket_location
+  storage_class   = var.bucket_storage_class
+  labels          = var.bucket_labels
+  lifecycle_rules = var.lifecycle_rules
+
   project_id = var.project
 
   use_existing_k8s_sa = true
