@@ -30,7 +30,7 @@ module "service_account" {
 
 module "iam" {
   source  = "terraform-google-modules/iam/google//modules/service_accounts_iam"
-  version = "7.7.0"
+  version = "7.7.1"
 
   project = var.project
 
