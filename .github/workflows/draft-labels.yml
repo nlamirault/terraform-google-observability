@@ -15,22 +15,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Project / Release Drafter
+name: Project / Draft PR Labels
 
 on:
-  push:
-    # branches to consider in the event; optional, defaults to all
-    branches:
-      - master
+  pull_request:
+    types: [opened, ready_for_review]
 
 jobs:
-  update_release_draft:
+  triage:
     runs-on: ubuntu-latest
     steps:
-      # Drafts your next Release notes as Pull Requests are merged into "master"
-      - uses: release-drafter/release-drafter@v5
-        # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
-        # with:
-          # config-name: my-config.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: label swapping
+      uses: jinmayamashita/ready-for-review@1.0.0
+      with:
+        in-progress-label: 'status/in_progress'
+        ready-for-review-label: 'status/review_needed'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
