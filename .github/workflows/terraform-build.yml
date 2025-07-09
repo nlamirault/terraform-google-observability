@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: Copyright (C) Nicolas Lamirault <nicolas.lamirault@gmail.com>
+# SPDX-License-Identifier: Apache-2.0
+
+---
+name: Terraform / Build
+
+on:
+  pull_request:
+    paths:
+      - modules/**
+  workflow_dispatch:  # Allow manual triggering
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    name: Terraform Validation
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module:
+          - grafana
+          - loki
+          # - mimir
+          - prometheus
+          - tempo
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        id: setup-terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform Format
+        run: terraform fmt -check
+        working-directory: modules/${{ matrix.module }}
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory:  modules/${{ matrix.module }}
+
+      - name: Terraform Validate
+        run: terraform validate -no-color
+        working-directory:  modules/${{ matrix.module }}
