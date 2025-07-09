@@ -24,7 +24,7 @@ region = "...."
 
 ## Documentation
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -39,8 +39,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_iam"></a> [iam](#module\_iam) | terraform-google-modules/iam/google//modules/service_accounts_iam | 7.4.0 |
-| <a name="module_service_account"></a> [service\_account](#module\_service\_account) | terraform-google-modules/service-accounts/google | 4.0.3 |
+| <a name="module_iam"></a> [iam](#module\_iam) | terraform-google-modules/iam/google//modules/service_accounts_iam | 8.1.0 |
+| <a name="module_service_account"></a> [service\_account](#module\_service\_account) | terraform-google-modules/service-accounts/google | 4.5.4 |
 
 ## Resources
 
@@ -59,4 +59,4 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_email"></a> [email](#output\_email) | Service account email |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

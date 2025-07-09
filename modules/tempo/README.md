@@ -38,7 +38,7 @@ bucket_labels = {
 
 ## Documentation
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -56,11 +56,11 @@ bucket_labels = {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bucket"></a> [bucket](#module\_bucket) | terraform-google-modules/cloud-storage/google//modules/simple_bucket | 3.1.0 |
-| <a name="module_iam_service_accounts"></a> [iam\_service\_accounts](#module\_iam\_service\_accounts) | terraform-google-modules/iam/google//modules/service_accounts_iam | 7.4.0 |
-| <a name="module_iam_storage_buckets"></a> [iam\_storage\_buckets](#module\_iam\_storage\_buckets) | terraform-google-modules/iam/google//modules/storage_buckets_iam | 7.4.0 |
-| <a name="module_kms"></a> [kms](#module\_kms) | terraform-google-modules/kms/google | 2.1.0 |
-| <a name="module_service_account"></a> [service\_account](#module\_service\_account) | terraform-google-modules/service-accounts/google | 4.1.0 |
+| <a name="module_bucket"></a> [bucket](#module\_bucket) | terraform-google-modules/cloud-storage/google//modules/simple_bucket | 4.0.0 |
+| <a name="module_iam_service_accounts"></a> [iam\_service\_accounts](#module\_iam\_service\_accounts) | terraform-google-modules/iam/google//modules/service_accounts_iam | 7.6.0 |
+| <a name="module_iam_storage_buckets"></a> [iam\_storage\_buckets](#module\_iam\_storage\_buckets) | terraform-google-modules/iam/google//modules/storage_buckets_iam | 7.6.0 |
+| <a name="module_kms"></a> [kms](#module\_kms) | terraform-google-modules/kms/google | 4.0.0 |
+| <a name="module_service_account"></a> [service\_account](#module\_service\_account) | terraform-google-modules/service-accounts/google | 4.2.1 |
 
 ## Resources
 
@@ -91,4 +91,4 @@ bucket_labels = {
 |------|-------------|
 | <a name="output_bucket"></a> [bucket](#output\_bucket) | Bucket resource (for single use). |
 | <a name="output_email"></a> [email](#output\_email) | Service account email |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
