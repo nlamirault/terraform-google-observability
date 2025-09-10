@@ -3,7 +3,7 @@
 
 module "service_account" {
   source  = "terraform-google-modules/service-accounts/google"
-  version = "4.5.4"
+  version = "4.6.0"
 
   project_id = var.project
 
