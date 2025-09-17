@@ -5,7 +5,7 @@
 # trivy:ignore:AVD-GCP-0066
 module "bucket" {
   source  = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
-  version = "11.1.0"
+  version = "11.1.2"
 
   name            = format("%s-%s", var.project, local.service)
   project_id      = var.project
