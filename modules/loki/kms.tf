@@ -4,7 +4,7 @@
 
 module "kms" {
   source  = "terraform-google-modules/kms/google"
-  version = "4.0.0"
+  version = "4.1.2"
 
   count = var.enable_kms ? 1 : 0
 
